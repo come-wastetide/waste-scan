@@ -8,9 +8,8 @@ __version__ = "0.0.0"
 
 REPO_NAME = "waste-scan"
 AUTHOR_USER_NAME = "come-wastetide"
-SRC_REPO = "Yolov7Detector"
+SRC_REPO = "waste-detection-yolov7"
 AUTHOR_EMAIL = "come@wastetide.ai"
-
 
 setuptools.setup(
     name=SRC_REPO,

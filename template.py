@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
 
 
-project_name = "waste-detection-yolov7"
+project_name = "waste_detection_yolov7"
 
 list_of_files = [
     ".github/workflows/.gitkeep",
