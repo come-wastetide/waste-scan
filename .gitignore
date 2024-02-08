@@ -193,7 +193,6 @@ runs/trashnet/weights/
 runs/test/
 runs/train/
 
-
 runs/detect/
 
 Dockerfile
