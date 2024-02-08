@@ -196,8 +196,6 @@ runs/train/
 
 runs/detect/
 
-Synthetic-trashes-1/
-
 Dockerfile
 compose.yaml
 .dockerignore
@@ -206,3 +204,7 @@ Bins/
 Bins-1/
 
 rootkey.csv
+
+AWSCLIV2.pkg
+
+data/
