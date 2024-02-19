@@ -174,7 +174,7 @@ tmp.ipynb
 __init__.py
 
 .DS_Store
-*.ipynb
+
 
 
 /Users/macbook/Desktop/WasteScan/waste-scan/traced_model.pt
@@ -207,3 +207,5 @@ rootkey.csv
 AWSCLIV2.pkg
 
 data/
+notebooks/
+models/yolov7/tools/
