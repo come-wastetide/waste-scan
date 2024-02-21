@@ -209,3 +209,4 @@ AWSCLIV2.pkg
 data/
 notebooks/
 models/yolov7/tools/
+model.h5
