@@ -210,3 +210,5 @@ data/
 notebooks/
 models/yolov7/tools/
 model.h5
+
+service/
