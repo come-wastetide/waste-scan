@@ -207,3 +207,41 @@ def create_folders_if_needed(folder_name,folder_names):
                 s3.put_object(Bucket=bucket_name, Key=f'{folder_name}/{category}/{sub_category}', Body='')
 
     print("Folders created successfully.")
+
+def create_dictionnaries(excel_data):
+    
+    '''
+    
+    input : excel_data with 'WASTE_TYPE' and 'PIC_NAME' in the keys
+    
+    output : dictionnaries with category as keys and the values are the list of filenames
+    '''
+
+
+    image_labels = excel_data.set_index('PIC_NAME')['WASTE_TYPE'].to_dict()
+    image_sub_labels = excel_data.set_index('PIC_NAME')['WASTE_SUB_TYPE'].to_dict()
+
+    category_files = {}
+    df = excel_data
+    categories = df['WASTE_TYPE'].unique()
+    # Parcourez les lignes du tableau Excel
+    for index, row in df.iterrows():
+        # Extrayez la catégorie et le nom de fichier à partir de la ligne
+        category = row['WASTE_TYPE']
+        filename = row['PIC_NAME']
+
+        if category not in categories:
+            continue
+        # Si la catégorie n'existe pas encore dans le dictionnaire, créez une nouvelle liste vide
+        if category not in category_files:
+            category_files[category] = []
+
+        # Ajoutez le nom de fichier à la liste de valeurs correspondante
+        category_files[category].append(filename)
+
+    return category_files,image_labels,image_sub_labels
+
+
+
+
+    
