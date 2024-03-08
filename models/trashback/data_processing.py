@@ -326,7 +326,7 @@ def sort_local_file(file_to_sort,category_files):
 
                 n-=1
                 if n%1000==0:
-                    print(n + 'fichiers restants à trier')
+                    print(str(n) + 'fichiers restants à trier')
                 # we remove the copied file 
 
                 os.remove(source)
