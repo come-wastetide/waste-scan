@@ -18,12 +18,38 @@ from matplotlib import rc
 import boto3
 import io
 from tqdm import tqdm
+import json
+
+def data_selection(max_number_by_category,category_files):
+
+    '''only selects the first max_number_by_category files in each category'''
+
+    for category in category_files.keys():
+        category_files[category]=category_files[category][:max_number_by_category]
+    return category_files
+
+def import_excel_from_s3(bucket_name,excel_key):
+    s3 = boto3.client('s3')
+
+    excel_obj = s3.get_object(Bucket=bucket_name, Key=excel_file_key)
+    excel_data = pd.read_excel(io.BytesIO(excel_obj['Body'].read()))
+
+    excel_data.dropna(subset=['PIC_NAME'], inplace=True)
+
+    return excel_data
+
+
+def import_excel_from_local(excel_path):
+    excel_data = pd.read_excel(excel_path)
+    excel_data.dropna(subset=['PIC_NAME'], inplace=True)
+    return excel_data
+
 
 def list_keys(bucket_name,image_folder_key):
 
     '''
 
-    input : bucket name & folder in which we want to list keys
+    input : bucket name & folder in which we want to list keys !
 
     output : a list of keys without the name of the folder
 
@@ -168,7 +194,7 @@ def create_folder_names_from_excel(excel_data):
     '''
 
     folder_names = []
-    excel_data.dropna()
+    #excel_data.dropna()
 
     for i in range(45080):
         category = excel_data['WASTE_TYPE'][i]
@@ -214,7 +240,11 @@ def create_dictionnaries(excel_data):
     
     input : excel_data with 'WASTE_TYPE' and 'PIC_NAME' in the keys
     
-    output : dictionnaries with category as keys and the values are the list of filenames
+    output : 
+    - category_files : dictionnaries with category as keys and the values are the list of filenames
+    - image_labels : dictionnaries with filename as keys and the values are the categories
+    - image_sub_labels : dictionnaries with filename as keys and the values are the sub_categories
+
     '''
 
 
@@ -243,5 +273,63 @@ def create_dictionnaries(excel_data):
 
 
 
+def sort_local_file(file_to_sort,category_files):
+    
+    '''
+    
+    input : 
+    -file_to_sort : file containing the images (ex : file_to_sort ='data_620/')
+    -category_files : dictionnary of the selection (keys = category, value =[filnames])
+    
+    output :
+    nothing but the file is organised into a folder for each category
+
+    data
+    -Verre
+    --Verre01
+    --Verre02
+    ...
+    -Mégots
+    --Mégots01
+    --Mégots02
+    ...
+    ...
+        
+    complexity : O(n^2) with n being the number of images (supposing n elements in the dictionnary)
+    
+    
+    '''
 
     
+
+    # according to the labels, we organize the data into folders
+
+    categories = category_files.keys()
+
+    for category in categories:
+        directory = file_to_sort+category
+        if not os.path.exists(directory):
+            os.mkdir(directory)
+
+    available_files = os.listdir(file_to_sort)
+
+    n=len(available_files)
+
+    print(n)
+
+    for category in categories:
+        for filename in category_files[category]:
+            source = file_to_sort + filename
+            target = file_to_sort + category + '/' + filename
+            if filename in available_files:
+                shutil.copy(source, target)
+
+                n-=1
+                if n%1000==0:
+                    print(n + 'fichiers restants à trier')
+                # we remove the copied file 
+
+                os.remove(source)
+    print(f'{n} fichiers non trouvés dans le dicitonnaire, tri réalisé pour les autres')
+
+
