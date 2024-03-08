@@ -28,7 +28,7 @@ def resize_images(input_folder, output_folder, size, filenames_to_resize = []):
         i=0
         print(f'resizing {n} images')
         available_files = os.listdir(input_folder)
-        for filename in filenames_to_resizet:
+        for filename in filenames_to_resize:
             if filename in available_files:
                 img = cv2.imread(os.path.join(input_folder, filename))
                 img = cv2.resize(img, size)
