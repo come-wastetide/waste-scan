@@ -124,7 +124,6 @@ numexpr==2.8.7
 numpy==1.23.5
 nvidia-ml-py3==7.352.0
 oauthlib==3.2.2
-object-detection @ file:///Users/macbook/Desktop/Taco/models/research/dist/object_detection-0.1-py3-none-any.whl#sha256=79c34e8efc543dd0fdad782cad6fcc40f75d37ba21643c7c0430346479c3f698
 opencv-python==4.9.0.80
 opencv-python-headless==4.8.0.74
 openpyxl==3.1.2
@@ -150,7 +149,6 @@ pyarrow==14.0.2
 pyarrow-hotfix==0.6
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
-pycocotools @ git+https://github.com/cocodataset/cocoapi.git@8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9#subdirectory=PythonAPI
 pycparser==2.21
 pydantic==2.5.1
 pydantic_core==2.14.3
@@ -164,6 +162,7 @@ python-dotenv==1.0.0
 python-json-logger==2.0.7
 python-magic==0.4.27
 python-marmiton==0.4.2
+pytorch_lightning
 pytz==2023.3.post1
 PyYAML==6.0
 pyzmq==25.0.2

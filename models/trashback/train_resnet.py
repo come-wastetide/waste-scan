@@ -1,6 +1,16 @@
 import pytorch_lightning as pl
 import numpy as np
 import matplotlib.pyplot as plt
+from torchvision import transforms
+import torchvision
+import torchvision.models as models
+import torchmetrics
+import torch.nn.functional as F
+from pytorch_lightning.loggers import CSVLogger
+from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
+from PIL import ImageFile
+from torch import nn, utils
+import torch
 
 
 size = (620,620)
@@ -209,7 +219,7 @@ class LigResNeXt(pl.LightningModule):
         preds = self.model(X)
         return preds
 
-num_class = len(LABELS)
+#num_class = len(LABELS)
 
 def create_model(num_class,lr=0.00005,model_type = 'Resnet'):
 
