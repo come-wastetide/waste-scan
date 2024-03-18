@@ -13,15 +13,17 @@ def test(trainer,model,test_loader,ckpt_path='best'):
     trainer.test(model, test_loader, ckpt_path=ckpt_path)
 
 
-def print_confusion_matrix(path_to_checkpoints):
+def print_confusion_matrix(labels,predictions,class_names):
+    
+    
 
     ''' 
     To complete ! 
-    '''
+    
 
     # Charger le modèle entraîné
     model = LitResNeXt.load_from_checkpoint(path_to_checkpoints)
-
+    
     # Désactiver le mode d'entraînement
     model.eval()
 
@@ -35,15 +37,12 @@ def print_confusion_matrix(path_to_checkpoints):
             outputs = model(images)
             _, predicted = torch.max(outputs, dim=1)
             predictions.extend(predicted.cpu().numpy())
-            labels.extend(targets.cpu().numpy())
+            labels.extend(targets.cpu().numpy())'''
 
     # Calculer la matrice de confusion
     confusion_matrix = metrics.confusion_matrix(labels, predictions)
 
     
-    # Define the class labels
-    class_names = train_dataset.classes
-
     # Define the confusion matrix
     cm = np.array(confusion_matrix)
 
@@ -78,5 +77,35 @@ def print_confusion_matrix(path_to_checkpoints):
     # Show the plot
     plt.show()
 
-    # Afficher la matrice de confusion
-    print(confusion_matrix)
+
+
+def get_predictions(model,test_data):
+
+    
+
+    predictions = []
+    truth = []
+    misclassified = []
+    mispredictions=[]
+
+    n = len(test_data)
+
+    print(f'Number of test samples: {n}')
+    for i in range(n):
+        
+        image,label = test_data[i]
+        size = 620,620
+        
+        pred = predict_test(model,image).item()
+        
+        predictions.append(pred)
+        truth.append(label)
+
+        print(f'Image {i+1}/{n} - Predicted: {pred} - Truth: {label}')
+        
+        if pred!=label:
+            misclassified.append((image,label))
+            mispredictions.append(pred)
+
+    return predictions,truth,misclassified,mispredictions
+
